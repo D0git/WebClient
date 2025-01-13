@@ -1,24 +1,37 @@
 package com.example.car.services;
 
 import com.example.car.entities.Car;
-import com.example.car.repositories.CarRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 
 @Service
 public class CarService {
 
-    @Autowired
-    private CarRepository carRepository;
+    private final WebClient.Builder webClientBuilder;
+
+    public CarService(WebClient.Builder webClientBuilder){
+        this.webClientBuilder = webClientBuilder;
+    }
 
     public List<Car> findAll(){
-        return carRepository.findAll();
+        return webClientBuilder.build()
+                .get()
+                .uri("http://SERVICE-CLIENT/api/client")
+                .retrieve()
+                .bodyToFlux(Car.class)
+                .collectList()
+                .block();
     }
 
-    public Car findById(Long id) throws Exception{
-        return carRepository.findById(id).orElseThrow(() -> new
-                Exception("Invalid Car ID"));
-    }
+    public Car findById(Long id){
+        return webClientBuilder.build()
+                .get()
+                .uri("http://SERVICE-CLIENT/api/client/{id}")
+                .retrieve()
+                .bodyToMono(Car.class)
+                .block();
+    };
+
 }
