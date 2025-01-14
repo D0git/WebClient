@@ -18,7 +18,7 @@ public class CarService {
     public List<Car> findAll(){
         return webClientBuilder.build()
                 .get()
-                .uri("http://SERVICE-CLIENT/api/client")
+                .uri("http://localhost:8081/api/client")
                 .retrieve()
                 .bodyToFlux(Car.class)
                 .collectList()

@@ -1,0 +1,34 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: SERVICE-CLIENT
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/clientservicedb?createDatabaseIfNotExist=true
+    username: "root"
+    password: "hajar"
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+   # Enable service discovery with Consul
+    webclient:
+      enabled: true  # Enable WebClient for communication with services
+
+eureka:
+  client:
+    enabled: false  # Disable Eureka
+  instance:
+    enabled: false  # Disable Eureka instance
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG

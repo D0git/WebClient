@@ -1,0 +1,37 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: SERVICE-CAR  # Nom du service
+  cloud:
+    consul:
+      discovery:
+        locator:
+          enabled: true
+        enabled: true  # Activer la découverte de services avec Consul
+        service-name: SERVICE-CAR  # Nom du service dans Consul
+        health-check-path: /actuator/health  # Path de vérification de l'état de santé
+        port: 8082  # Le port sur lequel le service écoute
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/carservicedb?createDatabaseIfNotExist=true
+    username: "root"
+    password: "hajar"
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+
+eureka:
+  client:
+    enabled: false  # Désactive Eureka
+  instance:
+    enabled: false  # Désactive l'instance Eureka

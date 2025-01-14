@@ -1,0 +1,31 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: GATEWAY  # Nom du service
+
+  cloud:
+    discovery:
+      enabled: true  # Activer la découverte de services avec Consul
+    gateway:
+      discovery:
+        locator:
+          enabled: true  # Activer la découverte dynamique des routes via les services inscrits dans Consul
+
+  consul:
+    host: localhost  # Adresse du serveur Consul
+    port: 8500  # Port du serveur Consul
+
+  # Autres configurations, comme les bases de données, si nécessaires
+
+eureka:
+  client:
+    enabled: false  # Désactiver Eureka si vous utilisez Consul
+  instance:
+    enabled: false  # Désactiver l'instance Eureka
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
